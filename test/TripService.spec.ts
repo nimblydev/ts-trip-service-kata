@@ -1,5 +1,6 @@
 import UserNotLoggedInException from '../src/exception/UserNotLoggedInException';
 import Trip from '../src/trip/Trip';
+import TripDAO from '../src/trip/TripDAO';
 import TripService from '../src/trip/TripService';
 import User from '../src/user/User';
 import UserBuilder from './UserBuilder';
@@ -14,15 +15,16 @@ const TO_PARIS = new Trip();
 describe('TripService', () => {
     let tripService: TripService;
     let loggedInUser: User;
-
+    let tripDAO: TripDAO;
     beforeEach(() => {
-        tripService = new TestableTripService();
+        tripDAO = new TripDAO();
+        tripService = new TripService(tripDAO);
     });
 
     describe('getTripsByUser should', () => {
         it('should thow an exception when user is not logged', () => {
             expect(() => {
-                tripService.getTripsByUser(UNUSED_USER, GUEST);
+                tripService.getFriendsTrips(UNUSED_USER, GUEST);
             }).toThrow(UserNotLoggedInException);
         });
 
@@ -32,7 +34,7 @@ describe('TripService', () => {
                 .withTrips(TO_BRAZIL)
                 .build();
 
-            const trips = tripService.getTripsByUser(friend, REGISTERED_USER);
+            const trips = tripService.getFriendsTrips(friend, REGISTERED_USER);
 
             expect(trips.length).toBe(0);
         });
@@ -43,15 +45,11 @@ describe('TripService', () => {
                 .withTrips(TO_BRAZIL, TO_PARIS)
                 .build();
 
-            const trips = tripService.getTripsByUser(friend, REGISTERED_USER);
+            jest.spyOn(tripDAO, 'tripsBy').mockReturnValue(friend.getTrips());
+
+            const trips = tripService.getFriendsTrips(friend, REGISTERED_USER);
 
             expect(trips.length).toBe(2);
         });
     });
-
-    class TestableTripService extends TripService {
-        protected getTripsForUser(user: User): Trip[] {
-            return user.getTrips();
-        }
-    }
 });

@@ -5,6 +5,8 @@
         "target": "es6"
     },
     "include": [
-        "./src/**/*"
-, "test/TripService.spec.ts"    ]
+        "./src/**/*",
+        "test/TripService.spec.ts",
+        "test/TripDAO.spec.ts"
+    ]
 }
