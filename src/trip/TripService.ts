@@ -5,12 +5,12 @@ import Trip from './Trip';
 import TripDAO from './TripDAO';
 
 export default class TripService {
-    public getTripsByUser(user: User): Trip[] {
-        if (this.getLoggedInUser() === null) {
+    public getTripsByUser(user: User, loggedInUser: User): Trip[] {
+        if (loggedInUser === null) {
             throw new UserNotLoggedInException();
         }
 
-        return user.isFriendsWith(this.getLoggedInUser())
+        return user.isFriendsWith(loggedInUser)
             ? this.getTripsForUser(user)
             : this.noTrips();
     }
@@ -21,9 +21,5 @@ export default class TripService {
 
     protected getTripsForUser(user: User) {
         return TripDAO.findTripsByUser(user);
-    }
-
-    protected getLoggedInUser(): User {
-        return UserSession.getLoggedUser();
     }
 }

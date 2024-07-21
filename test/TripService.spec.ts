@@ -17,14 +17,12 @@ describe('TripService', () => {
 
     beforeEach(() => {
         tripService = new TestableTripService();
-        loggedInUser = REGISTERED_USER;
     });
 
     describe('getTripsByUser should', () => {
         it('should thow an exception when user is not logged', () => {
-            loggedInUser = GUEST;
             expect(() => {
-                tripService.getTripsByUser(UNUSED_USER);
+                tripService.getTripsByUser(UNUSED_USER, GUEST);
             }).toThrow(UserNotLoggedInException);
         });
 
@@ -34,7 +32,7 @@ describe('TripService', () => {
                 .withTrips(TO_BRAZIL)
                 .build();
 
-            const trips = tripService.getTripsByUser(friend);
+            const trips = tripService.getTripsByUser(friend, REGISTERED_USER);
 
             expect(trips.length).toBe(0);
         });
@@ -45,20 +43,13 @@ describe('TripService', () => {
                 .withTrips(TO_BRAZIL, TO_PARIS)
                 .build();
 
-            const trips = tripService.getTripsByUser(friend);
+            const trips = tripService.getTripsByUser(friend, REGISTERED_USER);
 
             expect(trips.length).toBe(2);
         });
     });
 
     class TestableTripService extends TripService {
-        /**
-         * @Override
-         **/
-        protected getLoggedInUser() {
-            return loggedInUser;
-        }
-
         protected getTripsForUser(user: User): Trip[] {
             return user.getTrips();
         }
