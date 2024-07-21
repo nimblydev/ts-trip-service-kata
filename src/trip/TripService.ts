@@ -7,11 +7,11 @@ export default class TripService {
     public constructor(private tripDAO: TripDAO) {
         this.tripDAO = tripDAO;
     }
-    public getFriendsTrips(user: User, loggedInUser: User): Trip[] {
+    public getFriendsTrips(friend: User, loggedInUser: User): Trip[] {
         this.validate(loggedInUser);
 
-        return user.isFriendsWith(loggedInUser)
-            ? this.tripsBy(user)
+        return friend.isFriendsWith(loggedInUser)
+            ? this.tripsBy(friend)
             : this.noTrips();
     }
 
