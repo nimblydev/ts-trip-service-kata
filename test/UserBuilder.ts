@@ -1,7 +1,7 @@
 import Trip from '../src/trip/Trip';
 import User from '../src/user/User';
 
-export class UserBuilder {
+export default class UserBuilder {
     private user: User;
 
     static aUser(): UserBuilder {

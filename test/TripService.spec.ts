@@ -2,7 +2,7 @@ import UserNotLoggedInException from '../src/exception/UserNotLoggedInException'
 import Trip from '../src/trip/Trip';
 import TripService from '../src/trip/TripService';
 import User from '../src/user/User';
-import { UserBuilder } from './UserBuilder';
+import UserBuilder from './UserBuilder';
 
 const GUEST: User = null;
 const UNUSED_USER: User = null;

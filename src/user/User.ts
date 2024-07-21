@@ -1,4 +1,4 @@
-import Trip from "../trip/Trip";
+import Trip from '../trip/Trip';
 
 export default class User {
     private trips: Trip[] = [];
@@ -18,5 +18,8 @@ export default class User {
 
     public getTrips(): Trip[] {
         return this.trips;
+    }
+    public isFriendsWith(AnOtherUser: User): boolean {
+        return this.friends.includes(AnOtherUser);
     }
 }
