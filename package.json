@@ -7,7 +7,9 @@
     "test": "jest",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "pretest": "npm run lint",
-    "watch": "jest --watchAll"
+    "watch": "jest --watchAll",
+    "coverage": "jest --coverage",
+    "build": "tsc"
   },
   "author": "Daniel Perez <danipq26@gmail.com>",
   "devDependencies": {
@@ -45,6 +47,6 @@
   },
   "homepage": "https://github.com/sandromancuso/trip-service-kata",
   "dependencies": {
-    "typescript": "^5.5.2"
+    "typescript": "5.6.0-beta"
   }
 }
