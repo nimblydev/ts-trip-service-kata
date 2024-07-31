@@ -15,8 +15,8 @@ export default class TripService {
             : this.noTrips();
     }
 
-    private validate(loggedInUser: User) {
-        if (loggedInUser === null) {
+    private validate(loggedInUser: unknown): asserts loggedInUser is User {
+        if (!(loggedInUser instanceof User)) {
             throw new UserNotLoggedInException();
         }
     }
